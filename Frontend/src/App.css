@@ -1,0 +1,37 @@
+.cart {
+  background-color: lightgray;
+  width: 200px;
+  height: 200px;
+  border-radius: 12px;
+  padding: 15px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.cart-header {
+  font-size: 28px;
+  margin: 0;
+}
+
+.cart-desc {
+  color: gray;
+  font-size: 16px;
+  margin: 5px 0;
+}
+
+.cart-price {
+  margin-top: auto;
+  margin-bottom: 0;
+  font-size: 22px;
+  font-weight: bold;
+  color: green;
+}
+
+.cart-container {
+  display: flex;
+  flex-wrap: wrap;        
+  gap: 15px;              
+  justify-content: center; 
+  padding: 20px;
+}
