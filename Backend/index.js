@@ -8,7 +8,7 @@ const Item = require('./models/item')
 const errorHandler = require('./utils/middleware')
 
 app.use(express.json())
-app.use(express.static('dist'))
+app.use(express.static(path.join(__dirname, "Frontend/dist")));
 
 morgan.token('body', (req) => {
     return JSON.stringify(req.body);
