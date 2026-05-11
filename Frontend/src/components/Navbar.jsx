@@ -53,7 +53,13 @@ function Navbar({ cart, clearCart, searchedItem, handleSearchChange }) {
                                     <ul className="list-group mb-3">
                                         {cart.map((item, index) => (
                                             <li className="list-group-item d-flex justify-content-between" key={index}>
-                                                <span>{item.description}</span>
+                                                <span>
+                                                    {item.title} (
+                                                    {item.description.length > 30
+                                                        ? item.description.slice(0, 30) + "..."
+                                                        : item.description}
+                                                    )
+                                                </span>
                                                 <strong>${item.price}</strong>
                                             </li>
                                         ))}
