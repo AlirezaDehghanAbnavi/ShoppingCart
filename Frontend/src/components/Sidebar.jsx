@@ -2,13 +2,6 @@ function Sidebar({ selectedCategory, handleCategoryChange, uniqueCategories, und
     return (
         <aside className="col-12 col-md-3 border-end p-3">
 
-            <h5>Filters</h5>
-
-            <div className="form-check">
-                <input className="form-check-input" type="checkbox" checked={under500} onChange={handlePriceChange}/>
-                <label className="form-check-label">Under $500</label>
-            </div>
-
             <div className="mb-4">
                 <label htmlFor="categorySelect" className="form-label fw-bold">Category</label>
                 <select
@@ -24,6 +17,14 @@ function Sidebar({ selectedCategory, handleCategoryChange, uniqueCategories, und
                     ))}
                 </select>
             </div>
+
+            <h5>Filters</h5>
+            
+            <div className="form-check">
+                <input className="form-check-input" type="checkbox" checked={under500} onChange={handlePriceChange} />
+                <label className="form-check-label">Under $500</label>
+            </div>
+
 
             <div className="form-check">
                 <input className="form-check-input" type="checkbox" checked={over4star} onChange={handleRatingChange} />

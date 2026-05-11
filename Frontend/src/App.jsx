@@ -4,6 +4,7 @@ import Sidebar from './components/Sidebar'
 import ProductGrid from './components/ProductGrid'
 import Navbar from './components/Navbar'
 import CommunicationService from './services/CommunicationService'
+import Footer from './components/Footer'
 
 
 function App() {
@@ -88,6 +89,7 @@ function App() {
           </main>
         </div>
       </div>
+      <Footer></Footer>
     </>
   )
 }
