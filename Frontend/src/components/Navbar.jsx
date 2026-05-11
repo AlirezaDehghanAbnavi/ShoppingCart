@@ -6,7 +6,7 @@ function Navbar({ cart, clearCart, searchedItem, handleSearchChange }) {
     return (
         <>
             <nav className="navbar navbar-dark bg-dark px-3 d-flex justify-content-between">
-                <span className="navbar-brand">MyShop</span>
+                <span className="navbar-brand">DehghanCommerce</span>
 
                 <input
                     className="form-control w-50"
