@@ -9,8 +9,8 @@ import Footer from './components/Footer'
 
 function App() {
   const [cart, setCart] = useState([])
-  // const [minPrice, setMinPrice] = useState(0)
-  // const [maxPrice, setMaxPrice] = useState(100000000)
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
   const [searchedItem, setSearchedItem] = useState('')
   const [items, setItems] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('All')
@@ -41,6 +41,11 @@ function App() {
     setOver4Star(event.target.checked)
   }
 
+  const handleLogin = (event) => {
+    event.preventDefault()
+    console.log('logging in with', username, password)
+  }
+  
   useEffect(() => {
     CommunicationService.getAll()
       .then(initialItem => {

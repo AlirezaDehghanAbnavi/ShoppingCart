@@ -15,17 +15,29 @@ function Navbar({ cart, clearCart, searchedItem, handleSearchChange }) {
                     onChange={handleSearchChange}
                 />
 
-                <button
-                    className="btn btn-outline-light d-flex align-items-center gap-2"
-                    onClick={() => setIsModalOpen(true)}
-                >
-                    Cart
-                    {cart.length > 0 && (
-                        <span className="badge bg-danger rounded-pill">
-                            {cart.length}
-                        </span>
-                    )}
-                </button>
+                <div className="d-flex align-items-center gap-3">
+                    
+                    <a href="#" className="text-light text-decoration-none">
+                        Login
+                    </a>
+
+                    <a href="#" className="text-light text-decoration-none">
+                        Sign up
+                    </a>
+                    
+                    <button
+                        className="btn btn-outline-light d-flex align-items-center gap-2"
+                        onClick={() => setIsModalOpen(true)}
+                    >
+                        Cart
+
+                        {cart.length > 0 && (
+                            <span className="badge bg-danger rounded-pill">
+                                {cart.length}
+                            </span>
+                        )}
+                    </button>
+                </div>
             </nav>
 
             {isModalOpen && (
