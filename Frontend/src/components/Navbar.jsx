@@ -1,7 +1,10 @@
 import { useState } from 'react'
+import LoginModal from './LoginModal'
+import CartModal from './CardModal'
 
-function Navbar({ cart, clearCart, searchedItem, handleSearchChange }) {
-    const [isModalOpen, setIsModalOpen] = useState(false)
+function Navbar({ cart, clearCart, searchedItem, handleSearchChange, handleLogin }) {
+    const [isCartOpen, setIsCartOpen] = useState(false)
+    const [isLoginOpen, setIsLoginOpen] = useState(false)
 
     return (
         <>
@@ -16,21 +19,23 @@ function Navbar({ cart, clearCart, searchedItem, handleSearchChange }) {
                 />
 
                 <div className="d-flex align-items-center gap-3">
-                    
-                    <a href="#" className="text-light text-decoration-none">
+
+                    <button
+                        className="btn btn-link text-light text-decoration-none p-0"
+                        onClick={() => setIsLoginOpen(true)}
+                    >
                         Login
-                    </a>
+                    </button>
 
                     <a href="#" className="text-light text-decoration-none">
                         Sign up
                     </a>
-                    
+
                     <button
                         className="btn btn-outline-light d-flex align-items-center gap-2"
-                        onClick={() => setIsModalOpen(true)}
+                        onClick={() => setIsCartOpen(true)}
                     >
                         Cart
-
                         {cart.length > 0 && (
                             <span className="badge bg-danger rounded-pill">
                                 {cart.length}
@@ -40,64 +45,17 @@ function Navbar({ cart, clearCart, searchedItem, handleSearchChange }) {
                 </div>
             </nav>
 
-            {isModalOpen && (
-                <div
-                    className="modal show d-block"
-                    tabIndex="-1"
-                    style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}
-                >
-                    <div className="modal-dialog modal-dialog-centered">
-                        <div className="modal-content">
+            <CartModal
+                isOpen={isCartOpen}
+                onClose={() => setIsCartOpen(false)}
+                cart={cart}
+                clearCart={clearCart}
+            />
 
-                            <div className="modal-header">
-                                <h5 className="modal-title">Your Cart</h5>
-                                <button
-                                    type="button"
-                                    className="btn-close"
-                                    onClick={() => setIsModalOpen(false)}
-                                ></button>
-                            </div>
-
-                            <div className="modal-body">
-                                {cart.length === 0 ? (
-                                    <p>Your cart is empty.</p>
-                                ) : (
-                                    <ul className="list-group mb-3">
-                                        {cart.map((item, index) => (
-                                            <li className="list-group-item d-flex justify-content-between" key={index}>
-                                                <span>
-                                                    {item.title} (
-                                                    {item.description.length > 30
-                                                        ? item.description.slice(0, 30) + "..."
-                                                        : item.description}
-                                                    )
-                                                </span>
-                                                <strong>${item.price}</strong>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                )}
-                            </div>
-
-                            <div className="modal-footer">
-                                <button
-                                    type="button"
-                                    className="btn btn-secondary"
-                                    onClick={() => setIsModalOpen(false)}
-                                >
-                                    Close
-                                </button>
-                                {cart.length > 0 && <button
-                                    className="btn btn-danger btn-secondary"
-                                    onClick={clearCart}
-                                >
-                                    Clear Cart
-                                </button>}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
+            <LoginModal
+                isOpen={isLoginOpen}
+                onClose={() => setIsLoginOpen(false)}
+            />
         </>
     )
 }
