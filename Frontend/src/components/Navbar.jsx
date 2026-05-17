@@ -2,9 +2,13 @@ import { useState } from 'react'
 import LoginModal from './LoginModal'
 import CartModal from './CardModal'
 
-function Navbar({ cart, clearCart, searchedItem, handleSearchChange, handleLogin }) {
+function Navbar({ cart, clearCart, searchedItem, handleSearchChange, user, setUser }) {
     const [isCartOpen, setIsCartOpen] = useState(false)
     const [isLoginOpen, setIsLoginOpen] = useState(false)
+
+    const handleLogout = () => {
+        setUser(null);
+    }
 
     return (
         <>
@@ -20,16 +24,27 @@ function Navbar({ cart, clearCart, searchedItem, handleSearchChange, handleLogin
 
                 <div className="d-flex align-items-center gap-3">
 
-                    <button
-                        className="btn btn-link text-light text-decoration-none p-0"
-                        onClick={() => setIsLoginOpen(true)}
-                    >
-                        Login
-                    </button>
+                    {user ? (
+                        <div className="d-flex align-items-center gap-3">
+                            <span className="text-light">Hello, {user.username}</span>
+                            <button
+                                className="btn btn-outline-danger btn-sm"
+                                onClick={handleLogout}
+                            >
+                                Logout
+                            </button>
+                        </div>
+                    ) : (
+                        <><button
+                            className="btn btn-link text-light text-decoration-none p-0"
+                            onClick={() => setIsLoginOpen(true)}
+                        >
+                            Login
+                        </button><a href="#" className="text-light text-decoration-none">
+                                Sign up
+                            </a></>
+                    )}
 
-                    <a href="#" className="text-light text-decoration-none">
-                        Sign up
-                    </a>
 
                     <button
                         className="btn btn-outline-light d-flex align-items-center gap-2"
@@ -55,6 +70,7 @@ function Navbar({ cart, clearCart, searchedItem, handleSearchChange, handleLogin
             <LoginModal
                 isOpen={isLoginOpen}
                 onClose={() => setIsLoginOpen(false)}
+                setUser={setUser}
             />
         </>
     )

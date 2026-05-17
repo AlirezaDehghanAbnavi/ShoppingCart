@@ -1,16 +1,16 @@
-import { useState } from 'react';
-import LoginService from '../services/LoginService';
+import { useState } from 'react'
+import LoginService from '../services/LoginService'
 
-function LoginModal({ isOpen, onClose }) {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [user, setUser] = useState(null)
+function LoginModal({ isOpen, onClose, setUser }) {
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+    const [errorMessage, setErrorMessage] = useState(null)
 
     if (!isOpen) return null;
 
     const handleLogin = async (e) => {
         e.preventDefault();
-
+        setErrorMessage(null)
         console.log("Logging in with:", username, password);
 
         try {
@@ -18,9 +18,11 @@ function LoginModal({ isOpen, onClose }) {
             setUser(user)
             setUsername('')
             setPassword('')
+            onClose()
         } catch {
+            setErrorMessage('Invalid username or password')
             setTimeout(() => {
-                console.log('wrong credentials');
+                setErrorMessage(null)
             }, 5000)
         }
     };
@@ -44,6 +46,11 @@ function LoginModal({ isOpen, onClose }) {
 
                     <form onSubmit={handleLogin}>
                         <div className="modal-body">
+                            {errorMessage && (
+                                <div className="alert alert-danger py-2" role="alert">
+                                    {errorMessage}
+                                </div>
+                            )}
                             <div className="mb-3">
                                 <label className="form-label">Username</label>
                                 <input

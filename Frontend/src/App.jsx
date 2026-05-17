@@ -9,13 +9,12 @@ import Footer from './components/Footer'
 
 function App() {
   const [cart, setCart] = useState([])
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
   const [searchedItem, setSearchedItem] = useState('')
   const [items, setItems] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [under500, setUnder500] = useState(false);
   const [over4Star, setOver4Star] = useState(false);
+  const [user, setUser] = useState(null)
 
   const addToCart = (item) => {
     setCart([...cart, item])
@@ -41,10 +40,6 @@ function App() {
     setOver4Star(event.target.checked)
   }
 
-  const handleLogin = (event) => {
-    event.preventDefault()
-    console.log('logging in with', username, password)
-  }
   
   useEffect(() => {
     CommunicationService.getAll()
@@ -77,7 +72,8 @@ function App() {
         clearCart={clearCart}
         searchedItem={searchedItem}
         handleSearchChange={handleSearchChange}
-        handleLogin={handleLogin}
+        user={user}       
+        setUser={setUser}
       />
       <div className="container-fluid">
         <div className="row">
