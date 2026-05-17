@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Sidebar from './components/Sidebar'
 import ProductGrid from './components/ProductGrid'
@@ -40,7 +40,7 @@ function App() {
     setOver4Star(event.target.checked)
   }
 
-  
+
   useEffect(() => {
     CommunicationService.getAll()
       .then(initialItem => {
@@ -72,7 +72,7 @@ function App() {
         clearCart={clearCart}
         searchedItem={searchedItem}
         handleSearchChange={handleSearchChange}
-        user={user}       
+        user={user}
         setUser={setUser}
       />
       <div className="container-fluid">
