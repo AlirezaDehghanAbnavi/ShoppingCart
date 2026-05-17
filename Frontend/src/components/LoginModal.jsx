@@ -21,6 +21,8 @@ function LoginModal({ isOpen, onClose, setUser }) {
             onClose()
         } catch {
             setErrorMessage('Invalid username or password')
+            setUsername('')
+            setPassword('')
             setTimeout(() => {
                 setErrorMessage(null)
             }, 5000)
