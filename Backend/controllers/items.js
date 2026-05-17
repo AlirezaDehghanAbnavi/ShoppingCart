@@ -10,7 +10,7 @@ itemsRouter.get('/', async (request, response, next) => {
   }
 })
 
-itemsRouter.get('/info', async (request, response, next) => {
+itemsRouter.get('/info', async (request, response) => {
   try {
     const count = await Item.countDocuments({})
     response.send(`
@@ -40,7 +40,7 @@ itemsRouter.post('/bulk', async (request, response, next) => {
   try {
     const itemsArray = request.body.items
     const savedItems = await Item.insertMany(itemsArray)
-    
+
     console.log(`Successfully saved ${savedItems.length} products!`)
     response.status(201).json(savedItems)
   } catch (error) {
@@ -70,7 +70,7 @@ itemsRouter.put('/:id', async (request, response, next) => {
   try {
     const { title, description, price, category, rating } = request.body
     const item = await Item.findById(request.params.id)
-    
+
     if (!item) {
       return response.status(404).end()
     }
