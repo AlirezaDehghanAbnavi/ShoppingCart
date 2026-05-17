@@ -77,6 +77,7 @@ function App() {
         clearCart={clearCart}
         searchedItem={searchedItem}
         handleSearchChange={handleSearchChange}
+        handleLogin={handleLogin}
       />
       <div className="container-fluid">
         <div className="row">
