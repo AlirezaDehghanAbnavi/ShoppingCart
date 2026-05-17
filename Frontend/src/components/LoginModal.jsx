@@ -11,7 +11,7 @@ function LoginModal({ isOpen, onClose, setUser }) {
     const handleLogin = async (e) => {
         e.preventDefault();
         setErrorMessage(null)
-        console.log("Logging in with:", username, password);
+        console.log("Logging in with:", username);
 
         try {
             const user = await LoginService.login({ username, password })
