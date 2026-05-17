@@ -5,11 +5,11 @@ function Navbar({ cart, clearCart, searchedItem, handleSearchChange }) {
 
     return (
         <>
-            <nav className="navbar navbar-dark bg-dark px-3 d-flex justify-content-between">
+            <nav className="navbar navbar-dark bg-dark px-3 position-relative d-flex justify-content-between">
                 <span className="navbar-brand">DehghanCommerce</span>
 
                 <input
-                    className="form-control w-50"
+                    className="form-control w-50 position-absolute start-50 translate-middle-x"
                     placeholder="Search products..."
                     value={searchedItem.title}
                     onChange={handleSearchChange}
