@@ -9,7 +9,7 @@ lerna-debug.log*
 
 
 dist
-
+postman
 node_modules
 *.yaml
 *.local
