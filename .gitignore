@@ -11,7 +11,7 @@ lerna-debug.log*
 dist
 
 node_modules
-
+*.yaml
 *.local
 *.env
 # Editor directories and files
