@@ -5,6 +5,7 @@ const supertest = require('supertest')
 const app = require('../app')
 const Item = require('../models/item')
 
+
 const api = supertest(app)
 
 const initialItems = [
@@ -21,23 +22,46 @@ test('items are returned as json', async () => {
 beforeEach(async () => {
   await Item.deleteMany({})
 
-  for (let item of initialItems) {
+  for (const item of initialItems) {
     let itemObject = new Item(item)
     await itemObject.save()
   }
 })
 
-test.only('all items are returned', async () => {
+
+test('all items are returned', async () => {
   const response = await api.get('/api/items')
 
   assert.strictEqual(response.body.length, initialItems.length)
 })
 
-test.only('a specific item is within the returned items', async () => {
+test('a specific item is within the returned items', async () => {
   const response = await api.get('/api/items')
 
   const titles = response.body.map(i => i.title)
   assert.strictEqual(titles.includes('MacBook Pro'), true)
+})
+
+test('a new item can be added ', async () => {
+  const newItem = {
+    title: "Sony PlayStation VR2",
+    description: "Next-generation virtual reality headset",
+    price: 549,
+    category: "Consoles",
+    rating: 4.5
+  }
+
+  await api
+    .post('/api/items')
+    .send(newItem)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+
+  const response = await api.get('/api/items')
+  const titles = response.body.map(i => i.title)
+
+  assert.strictEqual(response.body.length, initialItems.length + 1)
+  assert(titles.includes(newItem.title))
 })
 
 
