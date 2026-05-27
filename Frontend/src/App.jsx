@@ -6,7 +6,7 @@ import Navbar from './components/Navbar'
 import CommunicationService from './services/CommunicationService'
 import Footer from './components/Footer'
 import { Route, Routes } from 'react-router-dom'
-import Signup from './pages/signup'
+import Signup from './pages/Signup'
 import LoginModal from './components/LoginModal'
 
 
