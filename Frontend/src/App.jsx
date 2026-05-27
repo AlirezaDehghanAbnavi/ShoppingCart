@@ -5,6 +5,9 @@ import ProductGrid from './components/ProductGrid'
 import Navbar from './components/Navbar'
 import CommunicationService from './services/CommunicationService'
 import Footer from './components/Footer'
+import { Route, Routes } from 'react-router-dom'
+import Signup from './pages/signup'
+import LoginModal from './components/LoginModal'
 
 
 function App() {
@@ -15,6 +18,7 @@ function App() {
   const [under500, setUnder500] = useState(false);
   const [over4Star, setOver4Star] = useState(false);
   const [user, setUser] = useState(null)
+  const [isLoginOpen, setIsLoginOpen] = useState(false)
 
   const addToCart = (item) => {
     setCart([...cart, item])
@@ -40,6 +44,9 @@ function App() {
     setOver4Star(event.target.checked)
   }
 
+  const handleLoginChange = (event) => {
+    setIsLoginOpen(true)
+  }
 
   useEffect(() => {
     CommunicationService.getAll()
@@ -74,24 +81,36 @@ function App() {
         handleSearchChange={handleSearchChange}
         user={user}
         setUser={setUser}
+        handleLoginChange={handleLoginChange}
       />
-      <div className="container-fluid">
-        <div className="row">
-          <Sidebar
-            selectedCategory={selectedCategory}
-            handleCategoryChange={handleCategoryChange}
-            uniqueCategories={uniqueCategories}
-            under500={under500}
-            handlePriceChange={handlePriceChange}
-            over4Star={over4Star}
-            handleRatingChange={handleRatingChange}
-          />
-          <main className="col-12 col-md-9 p-3">
-            <ProductGrid items={itemToShow} addToCart={addToCart} />
-          </main>
-        </div>
-      </div>
+      <Routes>
+        <Route path="/" element={
+          <div className="container-fluid">
+            <div className="row">
+              <Sidebar
+                selectedCategory={selectedCategory}
+                handleCategoryChange={handleCategoryChange}
+                uniqueCategories={uniqueCategories}
+                under500={under500}
+                handlePriceChange={handlePriceChange}
+                over4Star={over4Star}
+                handleRatingChange={handleRatingChange}
+              />
+              <main className="col-12 col-md-9 p-3">
+                <ProductGrid items={itemToShow} addToCart={addToCart} />
+              </main>
+            </div>
+          </div>
+        } />
+
+        <Route path="/signup" element={<Signup setIsLoginOpen={setIsLoginOpen}/>}/>
+      </Routes>
       <Footer></Footer>
+      <LoginModal
+        isOpen={isLoginOpen}
+        onClose={() => setIsLoginOpen(false)}
+        setUser={setUser}
+      />
     </>
   )
 }

@@ -1,15 +1,17 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import LoginService from '../services/LoginService'
 
 function LoginModal({ isOpen, onClose, setUser }) {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [errorMessage, setErrorMessage] = useState(null)
+    const navigate = useNavigate()
 
     if (!isOpen) return null;
-
-    const handleLogin = async (e) => {
-        e.preventDefault();
+    
+    const handleLogin = async (event) => {
+        event.preventDefault();
         setErrorMessage(null)
         console.log("Logging in with:", username);
 
@@ -19,6 +21,7 @@ function LoginModal({ isOpen, onClose, setUser }) {
             setUsername('')
             setPassword('')
             onClose()
+            navigate('/')
         } catch {
             setErrorMessage('Invalid username or password')
             setUsername('')

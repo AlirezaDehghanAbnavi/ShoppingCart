@@ -1,10 +1,9 @@
 import { useState } from 'react'
-import LoginModal from './LoginModal'
 import CartModal from './CardModal'
+import { Link } from 'react-router-dom'
 
-function Navbar({ cart, clearCart, searchedItem, handleSearchChange, user, setUser }) {
+function Navbar({ cart, clearCart, searchedItem, handleSearchChange, user, setUser, handleLoginChange }) {
     const [isCartOpen, setIsCartOpen] = useState(false)
-    const [isLoginOpen, setIsLoginOpen] = useState(false)
 
     const handleLogout = () => {
         setUser(null);
@@ -13,7 +12,9 @@ function Navbar({ cart, clearCart, searchedItem, handleSearchChange, user, setUs
     return (
         <>
             <nav className="navbar navbar-dark bg-dark px-3 position-relative d-flex justify-content-between">
-                <span className="navbar-brand">DehghanCommerce</span>
+                <Link to="/" className="navbar-brand">
+                    DehghanCommerce
+                </Link>
 
                 <input
                     className="form-control w-50 position-absolute start-50 translate-middle-x"
@@ -26,7 +27,7 @@ function Navbar({ cart, clearCart, searchedItem, handleSearchChange, user, setUs
 
                     {user ? (
                         <div className="d-flex align-items-center gap-3">
-                            <span className="text-light">Hello, {user.username}</span>
+                            <span className="text-light">Hello, {user.name.split(" ")[0]}</span>
                             <button
                                 className="btn btn-outline-danger btn-sm"
                                 onClick={handleLogout}
@@ -37,12 +38,13 @@ function Navbar({ cart, clearCart, searchedItem, handleSearchChange, user, setUs
                     ) : (
                         <><button
                             className="btn btn-link text-light text-decoration-none p-0"
-                            onClick={() => setIsLoginOpen(true)}
+                            onClick={handleLoginChange}
                         >
                             Login
-                        </button><a href="#" className="text-light text-decoration-none">
+                        </button>
+                            <Link to="/signup" className="text-light text-decoration-none">
                                 Sign up
-                            </a></>
+                            </Link></>
                     )}
 
 
@@ -65,12 +67,6 @@ function Navbar({ cart, clearCart, searchedItem, handleSearchChange, user, setUs
                 onClose={() => setIsCartOpen(false)}
                 cart={cart}
                 clearCart={clearCart}
-            />
-
-            <LoginModal
-                isOpen={isLoginOpen}
-                onClose={() => setIsLoginOpen(false)}
-                setUser={setUser}
             />
         </>
     )
