@@ -17,6 +17,7 @@ function LoginModal({ isOpen, onClose, setUser }) {
 
         try {
             const user = await LoginService.login({ username, password })
+            window.localStorage.setItem('loggedInUser', JSON.stringify(user))
             setUser(user)
             setUsername('')
             setPassword('')

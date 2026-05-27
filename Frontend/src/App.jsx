@@ -49,6 +49,12 @@ function App() {
   }
 
   useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem('loggedInUser')
+    if (loggedUserJSON) {
+      const savedUser = JSON.parse(loggedUserJSON)
+      setUser(savedUser)
+    }
+    
     CommunicationService.getAll()
       .then(initialItem => {
         console.log("Promise fullfilled");
@@ -103,7 +109,7 @@ function App() {
           </div>
         } />
 
-        <Route path="/signup" element={<Signup setIsLoginOpen={setIsLoginOpen}/>}/>
+        <Route path="/signup" element={<Signup setIsLoginOpen={setIsLoginOpen} />} />
       </Routes>
       <Footer></Footer>
       <LoginModal

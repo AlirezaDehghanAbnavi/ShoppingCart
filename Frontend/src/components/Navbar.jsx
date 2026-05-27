@@ -6,6 +6,7 @@ function Navbar({ cart, clearCart, searchedItem, handleSearchChange, user, setUs
     const [isCartOpen, setIsCartOpen] = useState(false)
 
     const handleLogout = () => {
+        window.localStorage.removeItem('loggedInUser');
         setUser(null);
     }
 
