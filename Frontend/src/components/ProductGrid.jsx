@@ -1,9 +1,13 @@
 import Card from "./Card"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 function ProductGrid({ items, addToCart }) {
     const [currentPage, setCurrentPage] = useState(1)
     const itemsPerPage = 12
+
+    useEffect(() => {
+        setCurrentPage(1)
+    }, [items])
 
     const lastItemIndex = currentPage * itemsPerPage
     const firstItemIndex = lastItemIndex - itemsPerPage
