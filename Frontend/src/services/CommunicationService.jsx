@@ -7,14 +7,12 @@ const getAll = async () => {
 }
 
 const add = async (item) => {
-    const request = axios.post(baseURL, item)
-    const response = await request;
+    const response = await axios.post(baseURL, item);
     return response.data;
 }
 
 const remove = async (id) => {
-    const request = axios.delete(`${baseURL}/${id}`)
-    const response = await request;
+    const response = await axios.delete(`${baseURL}/${id}`);
     return response.data;
 }
 
