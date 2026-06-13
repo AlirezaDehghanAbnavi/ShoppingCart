@@ -2,12 +2,12 @@ import { useState } from 'react'
 import CartModal from './CardModal'
 import { Link } from 'react-router-dom'
 
-function Navbar({ cart, clearCart, searchedItem, handleSearchChange, user, setUser, handleLoginChange }) {
+function Navbar({ cart, clearCart, searchedItem, handleSearchChange, user, setUser, onLoginClick }) {
     const [isCartOpen, setIsCartOpen] = useState(false)
 
     const handleLogout = () => {
-        window.localStorage.removeItem('loggedInUser');
-        setUser(null);
+        window.localStorage.removeItem('loggedInUser')
+        setUser(null)
     }
 
     return (
@@ -20,15 +20,14 @@ function Navbar({ cart, clearCart, searchedItem, handleSearchChange, user, setUs
                 <input
                     className="form-control w-50 position-absolute start-50 translate-middle-x"
                     placeholder="Search products..."
-                    value={searchedItem.title}
+                    value={searchedItem}
                     onChange={handleSearchChange}
                 />
 
                 <div className="d-flex align-items-center gap-3">
-
                     {user ? (
                         <div className="d-flex align-items-center gap-3">
-                            <span className="text-light">Hello, {user.name.split(" ")[0]}</span>
+                            <span className="text-light">Hello, {user.name.split(' ')[0]}</span>
                             <button
                                 className="btn btn-outline-danger btn-sm"
                                 onClick={handleLogout}
@@ -37,17 +36,18 @@ function Navbar({ cart, clearCart, searchedItem, handleSearchChange, user, setUs
                             </button>
                         </div>
                     ) : (
-                        <><button
-                            className="btn btn-link text-light text-decoration-none p-0"
-                            onClick={handleLoginChange}
-                        >
-                            Login
-                        </button>
+                        <>
+                            <button
+                                className="btn btn-link text-light text-decoration-none p-0"
+                                onClick={onLoginClick}
+                            >
+                                Login
+                            </button>
                             <Link to="/signup" className="text-light text-decoration-none">
                                 Sign up
-                            </Link></>
+                            </Link>
+                        </>
                     )}
-
 
                     <button
                         className="btn btn-outline-light d-flex align-items-center gap-2"
