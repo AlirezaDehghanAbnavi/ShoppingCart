@@ -13,15 +13,18 @@ const itemSchema = new mongoose.Schema({
   },
   price: {
     type: Number,
-    required: true
+    required: true,
+    min: [0, 'Price must be a positive number']
   },
   category: {
     type: String,
     required: true
   },
   rating: {
-    type: Double,
-    required: false
+    type: Number,
+    required: false,
+    min: 0,
+    max: 5
   }
 })
 
