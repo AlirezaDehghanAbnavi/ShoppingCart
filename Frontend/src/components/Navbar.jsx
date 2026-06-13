@@ -2,7 +2,7 @@ import { useState } from 'react'
 import CartModal from './CardModal'
 import { Link } from 'react-router-dom'
 
-function Navbar({ cart, clearCart, searchedItem, handleSearchChange, user, setUser, onLoginClick }) {
+function Navbar({ cart, clearCart, searchedItem, removeFromCart, handleSearchChange, user, setUser, onLoginClick }) {
     const [isCartOpen, setIsCartOpen] = useState(false)
 
     const handleLogout = () => {
@@ -66,6 +66,7 @@ function Navbar({ cart, clearCart, searchedItem, handleSearchChange, user, setUs
             <CartModal
                 isOpen={isCartOpen}
                 onClose={() => setIsCartOpen(false)}
+                onRemoveFromCart={removeFromCart}
                 cart={cart}
                 clearCart={clearCart}
             />

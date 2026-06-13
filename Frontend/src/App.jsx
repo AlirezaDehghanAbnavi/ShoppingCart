@@ -21,6 +21,7 @@ function App() {
 
   const addToCart = (item) => setCart([...cart, item])
   const clearCart = () => setCart([])
+  const removeFromCart = (index) => setCart(cart.filter((_, i) => i !== index))
   const handleSearchChange = (event) => setSearchedItem(event.target.value)
   const handleCategoryChange = (event) => setSelectedCategory(event.target.value)
   const handlePriceChange = (event) => setUnder500(event.target.checked)
@@ -58,6 +59,7 @@ function App() {
         clearCart={clearCart}
         searchedItem={searchedItem}
         handleSearchChange={handleSearchChange}
+        removeFromCart={removeFromCart}
         user={user}
         setUser={setUser}
         onLoginClick={() => setIsLoginOpen(true)}

@@ -1,4 +1,4 @@
-function CartModal({ isOpen, onClose, cart, clearCart }) {
+function CartModal({ isOpen, onClose, onRemoveFromCart, cart, clearCart }) {
     if (!isOpen) return null;
 
     const total = cart.reduce((sum, item) => sum + item.price, 0)
@@ -32,7 +32,7 @@ function CartModal({ isOpen, onClose, cart, clearCart }) {
                             <>
                                 <ul className="list-group mb-3">
                                     {cart.map((item, index) => (
-                                        <li className="list-group-item d-flex justify-content-between" key={index}>
+                                        <li className="list-group-item d-flex justify-content-between align-items-center" key={index}>
                                             <span>
                                                 {item.title} (
                                                 {item.description.length > 30
@@ -40,7 +40,15 @@ function CartModal({ isOpen, onClose, cart, clearCart }) {
                                                     : item.description}
                                                 )
                                             </span>
-                                            <strong>${item.price}</strong>
+                                            <div className="d-flex align-items-center gap-3">
+                                                <strong>${item.price}</strong>
+                                                <button
+                                                    className="btn btn-sm btn-outline-danger"
+                                                    onClick={() => onRemoveFromCart(index)}
+                                                >
+                                                    &times;
+                                                </button>
+                                            </div>
                                         </li>
                                     ))}
                                 </ul>
