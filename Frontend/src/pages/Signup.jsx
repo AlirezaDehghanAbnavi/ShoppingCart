@@ -4,14 +4,14 @@ import SignupService from '../services/SignupService';
 import { z } from 'zod';
 
 const signupSchema = z.object({
-  username: z.string().min(6, "Username must be at least 6 characters"),
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.email("Invalid email address"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
+  username: z.string().min(6, 'Username must be at least 6 characters'),
+  name: z.string().min(2, 'Name must be at least 2 characters'),
+  email: z.string().email('Invalid email address'),
+  password: z.string().min(6, 'Password must be at least 6 characters'),
   confirmPassword: z.string()
 }).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords do not match",
-  path: ["confirmPassword"],
+  message: 'Passwords do not match',
+  path: ['confirmPassword'],
 });
 
 function Signup({ setIsLoginOpen }) {
@@ -21,6 +21,7 @@ function Signup({ setIsLoginOpen }) {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -29,25 +30,20 @@ function Signup({ setIsLoginOpen }) {
     setError(null);
 
     const result = signupSchema.safeParse({ username, name, email, password, confirmPassword });
-
     if (!result.success) {
       setError(result.error.issues[0].message);
       return;
     }
 
+    setIsLoading(true);
     try {
-      await SignupService.signup({
-        username,
-        email,
-        name,
-        password
-      });
-
+      await SignupService.signup({ username, email, name, password });
       navigate('/');
       setIsLoginOpen(true);
-
     } catch (err) {
-      setError(err.message);
+      setError(err.response?.data?.error || err.message || 'Signup failed. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -60,68 +56,77 @@ function Signup({ setIsLoginOpen }) {
 
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
-            <label className="form-label">Username</label>
+            <label className="form-label" htmlFor="signup-username">Username</label>
             <input
+              id="signup-username"
               type="text"
               className="form-control"
               placeholder="Choose a username"
               value={username}
-              onChange={(event) => setUsername(event.target.value)}
+              onChange={(e) => setUsername(e.target.value)}
               required
             />
           </div>
 
           <div className="mb-3">
-            <label className="form-label">Full Name</label>
+            <label className="form-label" htmlFor="signup-name">Full Name</label>
             <input
+              id="signup-name"
               type="text"
               className="form-control"
               placeholder="John Doe"
               value={name}
-              onChange={(event) => setName(event.target.value)}
+              onChange={(e) => setName(e.target.value)}
               required
             />
           </div>
 
           <div className="mb-3">
-            <label className="form-label">Email address</label>
+            <label className="form-label" htmlFor="signup-email">Email address</label>
             <input
+              id="signup-email"
               type="email"
               className="form-control"
               placeholder="name@example.com"
               value={email}
-              onChange={(event) => setEmail(event.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
 
           <div className="mb-3">
-            <label className="form-label">Password</label>
+            <label className="form-label" htmlFor="signup-password">Password</label>
             <input
+              id="signup-password"
               type="password"
               className="form-control"
               placeholder="Create a password"
               value={password}
-              onChange={(event) => setPassword(event.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
               required
-              minLength="3"
+              minLength="6"
             />
           </div>
 
           <div className="mb-4">
-            <label className="form-label">Confirm Password</label>
+            <label className="form-label" htmlFor="signup-confirm">Confirm Password</label>
             <input
+              id="signup-confirm"
               type="password"
               className="form-control"
               placeholder="Confirm your password"
               value={confirmPassword}
-              onChange={(event) => setConfirmPassword(event.target.value)}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               required
             />
           </div>
 
-          <button type="submit" className="btn btn-primary w-100 mb-3">
-            Sign Up
+          <button
+            type="submit"
+            className="btn btn-primary w-100 mb-3"
+            disabled={isLoading}
+          >
+            {isLoading ? 'Creating account...' : 'Sign Up'}
           </button>
 
           <div className="text-center mt-3">
