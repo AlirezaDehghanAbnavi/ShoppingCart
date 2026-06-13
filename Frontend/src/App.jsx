@@ -9,44 +9,22 @@ import { Route, Routes } from 'react-router-dom'
 import Signup from './pages/Signup'
 import LoginModal from './components/LoginModal'
 
-
 function App() {
   const [cart, setCart] = useState([])
   const [searchedItem, setSearchedItem] = useState('')
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState([])
   const [selectedCategory, setSelectedCategory] = useState('All')
-  const [under500, setUnder500] = useState(false);
-  const [over4Star, setOver4Star] = useState(false);
+  const [under500, setUnder500] = useState(false)
+  const [over4Star, setOver4Star] = useState(false)
   const [user, setUser] = useState(null)
   const [isLoginOpen, setIsLoginOpen] = useState(false)
 
-  const addToCart = (item) => {
-    setCart([...cart, item])
-  }
-
-  const clearCart = () => {
-    setCart([])
-  }
-
-  const handleSearchChange = (event) => {
-    setSearchedItem(event.target.value)
-  }
-
-  const handleCategoryChange = (event) => {
-    setSelectedCategory(event.target.value)
-  }
-
-  const handlePriceChange = (event) => {
-    setUnder500(event.target.checked)
-  }
-
-  const handleRatingChange = (event) => {
-    setOver4Star(event.target.checked)
-  }
-
-  const handleLoginChange = (event) => {
-    setIsLoginOpen(true)
-  }
+  const addToCart = (item) => setCart([...cart, item])
+  const clearCart = () => setCart([])
+  const handleSearchChange = (event) => setSearchedItem(event.target.value)
+  const handleCategoryChange = (event) => setSelectedCategory(event.target.value)
+  const handlePriceChange = (event) => setUnder500(event.target.checked)
+  const handleRatingChange = (event) => setOver4Star(event.target.checked)
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedInUser')
@@ -54,29 +32,24 @@ function App() {
       const savedUser = JSON.parse(loggedUserJSON)
       setUser(savedUser)
     }
-    
+
     CommunicationService.getAll()
-      .then(initialItem => {
-        console.log("Promise fullfilled");
-        setItems(initialItem)
-      })
+      .then(initialItems => setItems(initialItems))
+      .catch(error => console.error('Failed to fetch items:', error))
   }, [])
 
-  const uniqueCategories = ["All", ...new Set(items.map(item => item.category))];
+  const uniqueCategories = ['All', ...new Set(items.map(item => item.category))]
 
   const itemToShow = items.filter(item => {
-    const search = searchedItem.toLowerCase();
-
-    const matchesSearch = item.title.toLowerCase().includes(search) ||
-      item.description.toLowerCase().includes(search);
-
-    const matchesCategory = selectedCategory === "All" || item.category === selectedCategory;
-
-    const matchesUnder500 = under500 ? item.price <= 500 : true;
-    const matchesOver4Star = over4Star ? item.rating >= 4.5 : true;
-
-    return matchesSearch && matchesCategory && matchesUnder500 && matchesOver4Star;
-  });
+    const search = searchedItem.toLowerCase()
+    const matchesSearch =
+      item.title.toLowerCase().includes(search) ||
+      item.description.toLowerCase().includes(search)
+    const matchesCategory = selectedCategory === 'All' || item.category === selectedCategory
+    const matchesUnder500 = under500 ? item.price <= 500 : true
+    const matchesOver4Star = over4Star ? item.rating >= 4.5 : true
+    return matchesSearch && matchesCategory && matchesUnder500 && matchesOver4Star
+  })
 
   return (
     <>
@@ -87,7 +60,7 @@ function App() {
         handleSearchChange={handleSearchChange}
         user={user}
         setUser={setUser}
-        handleLoginChange={handleLoginChange}
+        onLoginClick={() => setIsLoginOpen(true)}
       />
       <Routes>
         <Route path="/" element={
@@ -108,10 +81,9 @@ function App() {
             </div>
           </div>
         } />
-
         <Route path="/signup" element={<Signup setIsLoginOpen={setIsLoginOpen} />} />
       </Routes>
-      <Footer></Footer>
+      <Footer />
       <LoginModal
         isOpen={isLoginOpen}
         onClose={() => setIsLoginOpen(false)}
